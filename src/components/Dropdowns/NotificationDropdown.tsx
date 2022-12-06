@@ -1,5 +1,6 @@
 import React from 'react';
 import { createPopper } from '@popperjs/core';
+import { FaBell } from 'react-icons/fa';
 
 const NotificationDropdown = () => {
   // dropdown props
@@ -27,7 +28,7 @@ const NotificationDropdown = () => {
           dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover();
         }}
       >
-        <i className="fas fa-bell"></i>
+        <FaBell />
       </a>
       <div
         ref={popoverDropdownRef}

@@ -1,8 +1,11 @@
+import AdminNavbar from 'components/Navbars/AdminNavbar';
+import HeaderStats from 'components/Headers/HeaderStats';
+
 const HomePage = () => {
   return (
-    <div className="container mx-auto bg-red-200">
-      <h1>Home page</h1>
-      <a href="welcome">Welcome page</a>
+    <div className="">
+      <AdminNavbar />
+      <HeaderStats />
     </div>
   );
 };

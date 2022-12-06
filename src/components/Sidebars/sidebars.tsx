@@ -1,12 +1,35 @@
 /*eslint-disable*/
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { FaTv, FaRocket, FaBars, FaTimes } from 'react-icons/fa';
+import { IconType } from 'react-icons';
 
 import NotificationDropdown from 'components/Dropdowns/NotificationDropdown.js';
 import UserDropdown from 'components/Dropdowns/UserDropdown.js';
+import classNames from 'lib/ClassNames';
+
+import { INavItem } from 'types/navItem';
+
+const navData: INavItem[] = [
+  {
+    name: 'Dashboard',
+    icon: FaTv,
+    href: '/',
+  },
+  {
+    name: 'Welcome Page',
+    icon: FaRocket,
+    href: '/welcome',
+  },
+];
 
 export default function Sidebar() {
-  const [collapseShow, setCollapseShow] = React.useState('hidden');
+  const [collapseShow, setCollapseShow] = useState<string>('hidden');
+  const location = useLocation();
+
+  const activeClass = (nav: INavItem): string => {
+    return location.pathname === nav.href ? 'text-pink-500 hover:text-pink-300' : '';
+  };
   return (
     <>
       <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
@@ -17,7 +40,7 @@ export default function Sidebar() {
             type="button"
             onClick={() => setCollapseShow('bg-white m-2 py-3 px-6')}
           >
-            <i className="fas fa-bars"></i>
+            <FaBars />
           </button>
           {/* Brand */}
           <Link
@@ -59,7 +82,7 @@ export default function Sidebar() {
                     className="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
                     onClick={() => setCollapseShow('hidden')}
                   >
-                    <i className="fas fa-times"></i>
+                    <FaTimes />
                   </button>
                 </div>
               </div>
@@ -84,93 +107,23 @@ export default function Sidebar() {
             {/* Navigation */}
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
-              <li className="items-center">
-                <Link
-                  className={
-                    'text-xs uppercase py-3 font-bold block ' +
-                    (window.location.href.indexOf('/admin/dashboard') !== -1
-                      ? 'text-lightBlue-500 hover:text-lightBlue-600'
-                      : 'text-blueGray-700 hover:text-blueGray-500')
-                  }
-                  to="/admin/dashboard"
-                >
-                  <i
-                    className={
-                      'fas fa-tv mr-2 text-sm ' +
-                      (window.location.href.indexOf('/admin/dashboard') !== -1
-                        ? 'opacity-75'
-                        : 'text-blueGray-300')
-                    }
-                  ></i>{' '}
-                  Dashboard
-                </Link>
-              </li>
-
-              <li className="items-center">
-                <Link
-                  className={
-                    'text-xs uppercase py-3 font-bold block ' +
-                    (window.location.href.indexOf('/admin/settings') !== -1
-                      ? 'text-lightBlue-500 hover:text-lightBlue-600'
-                      : 'text-blueGray-700 hover:text-blueGray-500')
-                  }
-                  to="/admin/settings"
-                >
-                  <i
-                    className={
-                      'fas fa-tools mr-2 text-sm ' +
-                      (window.location.href.indexOf('/admin/settings') !== -1
-                        ? 'opacity-75'
-                        : 'text-blueGray-300')
-                    }
-                  ></i>{' '}
-                  Settings
-                </Link>
-              </li>
-
-              <li className="items-center">
-                <Link
-                  className={
-                    'text-xs uppercase py-3 font-bold block ' +
-                    (window.location.href.indexOf('/admin/tables') !== -1
-                      ? 'text-lightBlue-500 hover:text-lightBlue-600'
-                      : 'text-blueGray-700 hover:text-blueGray-500')
-                  }
-                  to="/admin/tables"
-                >
-                  <i
-                    className={
-                      'fas fa-table mr-2 text-sm ' +
-                      (window.location.href.indexOf('/admin/tables') !== -1
-                        ? 'opacity-75'
-                        : 'text-blueGray-300')
-                    }
-                  ></i>{' '}
-                  Tables
-                </Link>
-              </li>
-
-              <li className="items-center">
-                <Link
-                  className={
-                    'text-xs uppercase py-3 font-bold block ' +
-                    (window.location.href.indexOf('/admin/maps') !== -1
-                      ? 'text-lightBlue-500 hover:text-lightBlue-600'
-                      : 'text-blueGray-700 hover:text-blueGray-500')
-                  }
-                  to="/admin/maps"
-                >
-                  <i
-                    className={
-                      'fas fa-map-marked mr-2 text-sm ' +
-                      (window.location.href.indexOf('/admin/maps') !== -1
-                        ? 'opacity-75'
-                        : 'text-blueGray-300')
-                    }
-                  ></i>{' '}
-                  Maps
-                </Link>
-              </li>
+              {navData.map(li => {
+                const { name, icon: Icon, href } = li;
+                return (
+                  <li className="items-center">
+                    <Link
+                      to={href}
+                      className={classNames(
+                        'text-xs uppercase py-3 font-bold block',
+                        activeClass(li),
+                      )}
+                    >
+                      <Icon className="inline mr-2" />
+                      {name}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
 
             {/* Divider */}

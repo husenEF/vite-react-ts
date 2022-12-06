@@ -7,6 +7,8 @@ import GlobalStyles from 'lib/GlobalStyles';
 import RecoilProvider from 'components/providers/RecoilProvider';
 import QueryProvider from 'components/providers/QueryProvider';
 
+import './style.css'
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <Suspense fallback={<h1>Loading...</h1>}>

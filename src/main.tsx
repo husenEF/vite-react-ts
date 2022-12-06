@@ -15,7 +15,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <RecoilProvider>
         <GlobalStyles />
         <MainRoute />
-        {/* <RouterProvider router={router} />; */}
       </RecoilProvider>
     </QueryProvider>
   </React.StrictMode>,

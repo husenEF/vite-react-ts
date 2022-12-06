@@ -1,7 +1,8 @@
-import WelcomePage from 'pages/welcome';
+import { RouterProvider } from 'react-router-dom';
 
+import router from 'routes/root';
 function App() {
-  return <WelcomePage />;
+  return <RouterProvider router={router} />;
 }
 
 export default App;
